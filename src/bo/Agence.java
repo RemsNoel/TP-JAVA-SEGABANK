@@ -12,6 +12,11 @@ public class Agence {
     public Agence() {
     }
 
+    public Agence(int code, String adresse) {
+        this.code = code;
+        this.adresse = adresse;
+    }
+
     public Agence(int id_agence, int code, String adresse, List<Compte> listeCompte) {
         this.id_agence = id_agence;
         this.code = code;

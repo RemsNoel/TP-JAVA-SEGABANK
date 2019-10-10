@@ -8,17 +8,17 @@ import java.util.List;
 
 public class CompteDAO implements IDAO<Long, Compte> {
     @Override
-    public void create(Compte object) throws SQLException, IOException, ClassNotFoundException {
+    public void create(Compte compte) throws SQLException, IOException, ClassNotFoundException {
 
     }
 
     @Override
-    public void update(Compte object) throws SQLException, IOException, ClassNotFoundException {
+    public void update(Compte compte) throws SQLException, IOException, ClassNotFoundException {
 
     }
 
     @Override
-    public void remove(Compte object) throws SQLException, IOException, ClassNotFoundException {
+    public void remove(Compte compte) throws SQLException, IOException, ClassNotFoundException {
 
     }
 
