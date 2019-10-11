@@ -64,6 +64,10 @@ public class Agence {
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+    
+	public List<Compte> getCompte() {
+		return listeCompte;
+	}
 
     @Override
     public String toString() {
