@@ -94,13 +94,13 @@ public class App {
 		try {
 		agence.setCode(sc.nextInt());
 		}catch(InputMismatchException e) {
-			System.out.println( "\n Le code doit être un nombre entier" );
+			System.out.println( "\n Le code doit ï¿½tre un nombre entier" );
 		}
 		System.out.println( "Entrez l'Adresse de votre Agence : " );
 		try {
 		agence.setAdresse(sc.next());
 		}catch(InputMismatchException e){
-			System.out.println("\n L'Adresse doit être un nombre entier" );	
+			System.out.println("\n L'Adresse doit ï¿½tre un nombre entier" );	
 		}
 			try {
 				agenceCreated.create( agence );
@@ -132,7 +132,7 @@ public class App {
 		System.out.println( "1 - Details d'une Agence" );
 		System.out.println( "2 - Revenir au Menu" );
 		if (mode==1) {
-			System.out.print( "Entrez le code de votre Agence a modifié : " );
+			System.out.print( "Entrez le code de votre Agence a modifiï¿½ : " );
 			try {
 				listAgence.findById(sc.nextLong());
 			} catch (ClassNotFoundException | SQLException | IOException e1) {
@@ -152,9 +152,9 @@ public class App {
 		System.out.println( "======================================" );
 		System.out.println( "====== MODIFICATION D'UNE AGENCE =====" );
 		System.out.println( "======================================" );
-		System.out.println("====== Choisir l'Agence a modifié ======");
+		System.out.println("====== Choisir l'Agence a modifiï¿½ ======");
 		Agence agence = new Agence();
-		System.out.print( "Entrez le code de votre Agence a modifié : " );
+		System.out.print( "Entrez le code de votre Agence a modifiï¿½ : " );
 		try {
 			modifAgence.findById(sc.nextLong());
 		} catch (ClassNotFoundException | SQLException | IOException e1) {
@@ -166,20 +166,20 @@ public class App {
 		try {
 		agence.setCode(sc.nextInt());
 		}catch(InputMismatchException e) {
-			System.out.println( "\n Le code doit être un nombre entier" );
+			System.out.println( "\n Le code doit ï¿½tre un nombre entier" );
 		}
 		System.out.print( "Entrez la nouvelle adresse : " );
 		try {
 		agence.setAdresse(sc.next());
 		}catch(InputMismatchException e){
-			System.out.println("\n L'Adresse doit être une chaine de caractere" );
+			System.out.println("\n L'Adresse doit ï¿½tre une chaine de caractere" );
 		}
 		try {
 			finalModifAgence.update(agence);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println( "L'Agence a été modifié avec succes" );
+		System.out.println( "L'Agence a ï¿½tï¿½ modifiï¿½ avec succes" );
 		
 		dspMainMenu();	
 	}
@@ -188,7 +188,7 @@ public class App {
 		System.out.println( "======================================" );
 		System.out.println( "====== SUPPRESSION DE  L'AGENCE ======" );
 		System.out.println( "======================================" );
-		System.out.println( "Entrez le code de votre Agence a Supprimé : " );
+		System.out.println( "Entrez le code de votre Agence a Supprimï¿½ : " );
 		Agence agence=new Agence();
 		try {
 			supprAgence.findById(sc.nextLong());
@@ -202,7 +202,7 @@ public class App {
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("L'Agence a bien été supprimé");
+		System.out.println("L'Agence a bien ï¿½tï¿½ supprimï¿½");
 		dspMainMenu();	
 		
 	}
@@ -257,16 +257,16 @@ public class App {
 			try {
 				comptesimple.setSolde(sc.nextInt());
 				}catch(InputMismatchException e) {
-					System.out.println( "\n Le code doit être un nombre entier" );
+					System.out.println( "\n Le code doit ï¿½tre un nombre entier" );
 				}
-				System.out.println( "Entrez le découvert du Compte : " );
+				System.out.println( "Entrez le dï¿½couvert du Compte : " );
 				try {
 					comptesimple.setDecouvert(sc.nextDouble());
 				}catch(InputMismatchException e){
-					System.out.println("\n Votre découvert dois être un nombre" );	
+					System.out.println("\n Votre dï¿½couvert dois etre un nombre" );	
 				}
 				agence.getCompte().add(comptesimple);
-				System.out.println("Votre Compte Simple a bien été créer");
+				System.out.println("Votre Compte Simple a bien etï¿½ crï¿½er");
 				dspMainMenu();
 			break;
 		case 2:
@@ -295,16 +295,16 @@ public class App {
 			try {
 				compteEpargn.setSolde(sc.nextInt());
 				}catch(InputMismatchException e) {
-					System.out.println( "\n Le code doit être un nombre entier" );
+					System.out.println( "\n Le code doit ï¿½tre un nombre entier" );
 				}
 			System.out.println( "Entrez le taux d'interet du Compte : " );
 			try {
 				compteEpargn.setTaux_interet(sc.nextDouble());
 			}catch(InputMismatchException e){
-				System.out.println("\n Le taux d'interet doit être un nombre" );	
+				System.out.println("\n Le taux d'interet doit ï¿½tre un nombre" );	
 			}
 			agence2.getCompte().add(compteEpargn);
-			System.out.println("Votre Compte Simple a bien été créer");
+			System.out.println("Votre Compte Simple a bien ï¿½tï¿½ crï¿½er");
 			dspMainMenu();
 			break;
 		case 3:
@@ -333,10 +333,10 @@ public class App {
 			try {
 				comptePayant.setSolde(sc.nextInt());
 				}catch(InputMismatchException e) {
-					System.out.println( "\n Le code doit être un nombre entier" );
+					System.out.println( "\n Le code doit ï¿½tre un nombre entier" );
 				}
 			agence3.getCompte().add(comptePayant);
-			System.out.println("Votre Compte Simple a bien été créer");
+			System.out.println("Votre Compte Simple a bien ï¿½tï¿½ crï¿½er");
 			dspMainMenu();
 			break;
 		}

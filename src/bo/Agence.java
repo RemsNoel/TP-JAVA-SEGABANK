@@ -65,7 +65,7 @@ public class Agence {
         this.adresse = adresse;
     }
     
-	public List<Compte> getCompte() {
+	public List<Compte> getCompte(){
 		return listeCompte;
 	}
 
