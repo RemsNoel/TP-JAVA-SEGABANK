@@ -10,7 +10,7 @@ public class CompteEpargne extends Compte {
         solde = solde * interet;
     }
 
-    public CompteEpargne(int id_compte, double solde, int taux_interet) {
+    public CompteEpargne(int id_compte, int solde, int taux_interet) {
         super(id_compte, solde);
         this.taux_interet = taux_interet;
     }

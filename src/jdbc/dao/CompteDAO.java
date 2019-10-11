@@ -3,32 +3,105 @@ package jdbc.dao;
 import bo.Compte;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompteDAO implements IDAO<Long, Compte> {
+
+    private static final String INSERT_QUERY = "INSERT INTO compte (SOLDE, ID_AGENCE, DECOUVERT, TAUX_INTERET) VALUES(?,?,?,?)";
+    private static final String UPDATE_QUERY = "UPDATE compte SET SOLDE = ?, ID_AGENCE = ?, DECOUVERT = ?, TAUX_INTERET = ? WHERE ID_COMPTE = ?";
+    private static final String REMOVE_QUERY = "DELETE FROM compte WHERE ID_COMPTE = ?";
+    private static final String FIND_QUERY = "SELECT * FROM compte WHERE ID_COMPTE = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM compte";
+
     @Override
     public void create(Compte compte) throws SQLException, IOException, ClassNotFoundException {
-
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null) {
+            try ( PreparedStatement ps = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS) ) {
+                ps.setString(1, Double.toString(compte.getSolde()));
+                ps.setString(2, Integer.toString(compte.getId_agence()));
+                ps.setString(3, Double.toString(compte.getDecouvert()));
+                ps.setString(4, Double.toString(compte.getTauxInteret()));
+                ps.executeUpdate();
+                try ( ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        compte.setId_agence(rs.getInt(1));
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void update(Compte compte) throws SQLException, IOException, ClassNotFoundException {
-
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null){
+            try (PreparedStatement ps = connection.prepareStatement(UPDATE_QUERY)){
+                ps.setString(1, Double.toString(compte.getSolde()));
+                ps.setString(2, Integer.toString(compte.getId_agence()));
+                ps.setString(3, Double.toString(compte.getDecouvert()));
+                ps.setString(4, Double.toString(compte.getTauxInteret()));
+                ps.setString(5, Integer.toString(compte.getId_compte()));
+                ps.executeUpdate();
+            }
+        }
     }
 
     @Override
     public void remove(Compte compte) throws SQLException, IOException, ClassNotFoundException {
-
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null){
+            try (PreparedStatement ps = connection.prepareStatement(REMOVE_QUERY)){
+                ps.setString(1, Integer.toString(compte.getId_compte()));
+                ps.executeUpdate();
+            }
+        }
     }
 
     @Override
-    public Compte findById(Long aLong) throws SQLException, IOException, ClassNotFoundException {
-        return null;
+    public Compte findById(Long idCompte) throws SQLException, IOException, ClassNotFoundException {
+        Compte compte = new Compte();
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null){
+            try ( PreparedStatement ps = connection.prepareStatement(FIND_QUERY)){
+                ps.setString(1,Long.toString(idCompte));
+                try (ResultSet rs = ps.executeQuery()){
+                    if (rs.next()) {
+                        compte.setId_compte(rs.getInt(1));
+                        compte.setSolde(rs.getDouble(2));
+                        compte.setId_agence(rs.getInt(3));
+                        compte.setDecouvert(rs.getDouble(4));
+                        compte.setTauxInteret(rs.getDouble(5));
+                    }
+                }
+            }
+        }
+
+        return compte;
     }
 
     @Override
     public List<Compte> findAll() throws SQLException, IOException, ClassNotFoundException {
-        return null;
+        List<Compte> listCompte = new ArrayList<>();
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null){
+            try(PreparedStatement ps = connection.prepareStatement(FIND_ALL_QUERY)){
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Compte compte = new Compte();
+                        compte.setId_compte(rs.getInt(1));
+                        compte.setSolde(rs.getDouble(2));
+                        compte.setId_agence(rs.getInt(3));
+                        compte.setDecouvert(rs.getDouble(4));
+                        compte.setTauxInteret(rs.getDouble(4));
+                        listCompte.add(compte);
+                    }
+                }
+            }
+        }
+
+        return listCompte;
     }
 }

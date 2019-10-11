@@ -1,6 +1,8 @@
 package jdbc.dao;
 
 import bo.Agence;
+import bo.Compte;
+import com.mysql.cj.exceptions.ConnectionIsClosedException;
 
 import java.io.IOException;
 import java.sql.*;
@@ -14,6 +16,9 @@ public class AgenceDAO implements IDAO<Long, Agence> {
     private static final String REMOVE_QUERY = "DELETE FROM agence WHERE ID_AGENCE = ?";
     private static final String FIND_QUERY = "SELECT * FROM agence WHERE ID_AGENCE = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM agence";
+    private static final String FIND_ALL_COMPTE_QUERY = "SELECT compte.ID_COMPTE, compte.SOLDE, compte.ID_AGENCE," +
+            " compte.DECOUVERT, compte.TAUX_INTERET FROM compte, agence WHERE agence.ID_AGENCE = ? AND compte.ID_AGENCE = agence.ID_AGENCE";
+
 
     @Override
     public void create(Agence agence) throws SQLException, IOException, ClassNotFoundException {
@@ -38,20 +43,12 @@ public class AgenceDAO implements IDAO<Long, Agence> {
     public void update(Agence agence) throws SQLException, IOException, ClassNotFoundException {
         Connection connection = PersistenceManager.getConnection();
         if (connection != null){
-            try (PreparedStatement ps = connection.prepareStatement(UPDATE_QUERY, Statement.RETURN_GENERATED_KEYS)){
+            try (PreparedStatement ps = connection.prepareStatement(UPDATE_QUERY)){
                 ps.setString(1, Integer.toString(agence.getCode()));
                 ps.setString(2, agence.getNomAgence());
                 ps.setString(3,agence.getAdresse());
                 ps.setString(4, Integer.toString(agence.getId_agence()));
                 ps.executeUpdate();
-                try (ResultSet rs = ps.getGeneratedKeys()){
-                    if (rs.next()){
-                        agence.setId_agence(rs.getInt(1));
-                        agence.setCode(rs.getInt(2));
-                        agence.setNomAgence(rs.getString(3));
-                        agence.setAdresse(rs.getString(4));
-                    }
-                }
             }
         }
     }
@@ -60,7 +57,7 @@ public class AgenceDAO implements IDAO<Long, Agence> {
     public void remove(Agence agence) throws SQLException, IOException, ClassNotFoundException {
         Connection connection = PersistenceManager.getConnection();
         if (connection != null){
-            try (PreparedStatement ps = connection.prepareStatement(REMOVE_QUERY, Statement.RETURN_GENERATED_KEYS)){
+            try (PreparedStatement ps = connection.prepareStatement(REMOVE_QUERY)){
                 ps.setString(1, Integer.toString(agence.getId_agence()));
                 ps.executeUpdate();
             }
@@ -108,5 +105,28 @@ public class AgenceDAO implements IDAO<Long, Agence> {
         }
 
         return listAgence;
+    }
+
+    public List<Compte> findAllCompte(Agence agence) throws SQLException, IOException, ClassNotFoundException {
+        List<Compte> listCompte = new ArrayList<>();
+        Connection connection = PersistenceManager.getConnection();
+        if (connection != null){
+            try(PreparedStatement ps = connection.prepareStatement(FIND_ALL_COMPTE_QUERY)){
+                ps.setString(1, Integer.toString(agence.getId_agence()));
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Compte compte = new Compte();
+                        compte.setId_compte(rs.getInt(1));
+                        compte.setSolde(rs.getInt(2));
+                        compte.setId_agence(rs.getInt(3));
+                        compte.setDecouvert(rs.getInt(4));
+                        compte.setTauxInteret(rs.getInt(5));
+                        listCompte.add(compte);
+                    }
+                }
+            }
+        }
+        return listCompte;
+
     }
 }
