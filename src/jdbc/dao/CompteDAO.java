@@ -2,7 +2,10 @@ package jdbc.dao;
 
 import bo.Compte;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,11 @@ public class CompteDAO implements IDAO<Long, Compte> {
     private static final String REMOVE_QUERY = "DELETE FROM compte WHERE ID_COMPTE = ?";
     private static final String FIND_QUERY = "SELECT * FROM compte WHERE ID_COMPTE = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM compte";
+    /**
+     * Path sortie fichier csv
+     */
+    private static String OUT_FILE = "./ressources/compte/compte";
+    private static String FORMAT = ".csv";
 
     /**
      * Création d'un Compte
@@ -37,10 +45,23 @@ public class CompteDAO implements IDAO<Long, Compte> {
                 ps.executeUpdate();
                 try ( ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
-                        compte.setId_agence(rs.getInt(1));
+                        compte.setId_compte(rs.getInt(1));
                     }
                 }
             }
+            String donneeCompte = compte.getId_compte() + "," +
+                    compte.getSolde() + "," + compte.getId_agence() + "," +
+                    compte.getDecouvert() + "," + compte.getTauxInteret();
+            Path outCsv = Paths.get(OUT_FILE + compte.getId_compte() + FORMAT);
+            File file = new File(outCsv.toString());
+            file.createNewFile();
+            FileWriter fw = new FileWriter(outCsv.toString(), true);
+            try(BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(donneeCompte);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -62,6 +83,21 @@ public class CompteDAO implements IDAO<Long, Compte> {
                 ps.setString(4, Double.toString(compte.getTauxInteret()));
                 ps.setString(5, Integer.toString(compte.getId_compte()));
                 ps.executeUpdate();
+            }
+            String donneeCompte = compte.getId_compte() + "," +
+                    compte.getSolde() + "," + compte.getId_agence() + "," +
+                    compte.getDecouvert() + "," + compte.getTauxInteret();
+            Path outCsv = Paths.get(OUT_FILE + compte.getId_compte() + FORMAT);
+            File file = new File(outCsv.toString());
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(outCsv.toString(), true);
+            try(BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.newLine();
+                bw.write(donneeCompte);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
