@@ -16,6 +16,13 @@ public class PersistenceManager {
 
     private PersistenceManager(){}//Prevents initialization
 
+    /**
+     * Permet de maintenir la connection
+     * @return Connection
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     public static Connection getConnection() throws SQLException, ClassNotFoundException, IOException {
         if ( connection == null || !connection.isValid( 2 )) {
 
@@ -35,6 +42,10 @@ public class PersistenceManager {
         return connection;
     }
 
+    /**
+     * Permet de finir la Connection
+     * @throws SQLException en cas d'erreur SQL
+     */
     public static void closeConnection() throws SQLException {
         if (connection != null && connection.isValid( 2 )) {
             connection.close();

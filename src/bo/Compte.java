@@ -8,14 +8,29 @@ public class Compte {
     private double decouvert;
     private double  tauxInteret;
 
+    /**
+     * Constructeur par défaut
+     */
     public Compte() {
     }
 
+    /**
+     * Constructeur Basique
+     * @param id_compte Id Compte
+     * @param solde Solde
+     */
     public Compte(int id_compte, double solde) {
         this.id_compte = id_compte;
         this.solde = solde;
     }
 
+    /**
+     * Constructeur pour une Création  de compte
+     * @param solde Solde
+     * @param id_agence Id Agence
+     * @param decouvert Découvert
+     * @param tauxInteret Taux interet
+     */
     public Compte(double solde, int id_agence, double decouvert, double tauxInteret) {
         this.solde = solde;
         this.id_agence = id_agence;
@@ -23,6 +38,14 @@ public class Compte {
         this.tauxInteret = tauxInteret;
     }
 
+    /**
+     * Constructeur pour un Update de Compte
+     * @param id_compte Id Compte
+     * @param solde Solde
+     * @param id_agence Id Agence
+     * @param decouvert Découvert
+     * @param tauxInteret Taux Interet
+     */
     public Compte(int id_compte, double solde, int id_agence, double decouvert, double tauxInteret) {
         this.id_compte = id_compte;
         this.solde = solde;

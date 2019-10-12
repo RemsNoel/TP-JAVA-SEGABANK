@@ -9,12 +9,22 @@ import java.util.List;
 
 public class CompteDAO implements IDAO<Long, Compte> {
 
+    /**
+     * Différentes Requêtes SQL pour les Comptes
+     */
     private static final String INSERT_QUERY = "INSERT INTO compte (SOLDE, ID_AGENCE, DECOUVERT, TAUX_INTERET) VALUES(?,?,?,?)";
     private static final String UPDATE_QUERY = "UPDATE compte SET SOLDE = ?, ID_AGENCE = ?, DECOUVERT = ?, TAUX_INTERET = ? WHERE ID_COMPTE = ?";
     private static final String REMOVE_QUERY = "DELETE FROM compte WHERE ID_COMPTE = ?";
     private static final String FIND_QUERY = "SELECT * FROM compte WHERE ID_COMPTE = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM compte";
 
+    /**
+     * Création d'un Compte
+     * @param compte Compte
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     @Override
     public void create(Compte compte) throws SQLException, IOException, ClassNotFoundException {
         Connection connection = PersistenceManager.getConnection();
@@ -34,6 +44,13 @@ public class CompteDAO implements IDAO<Long, Compte> {
         }
     }
 
+    /**
+     * Update d'un Compte
+     * @param compte Compte
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     @Override
     public void update(Compte compte) throws SQLException, IOException, ClassNotFoundException {
         Connection connection = PersistenceManager.getConnection();
@@ -49,6 +66,13 @@ public class CompteDAO implements IDAO<Long, Compte> {
         }
     }
 
+    /**
+     * Delete d'un compte
+     * @param compte Compte
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     @Override
     public void remove(Compte compte) throws SQLException, IOException, ClassNotFoundException {
         Connection connection = PersistenceManager.getConnection();
@@ -60,6 +84,14 @@ public class CompteDAO implements IDAO<Long, Compte> {
         }
     }
 
+    /**
+     * Trouver un Compte avec don id
+     * @param idCompte Id d'un Compte
+     * @return Compte
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     @Override
     public Compte findById(Long idCompte) throws SQLException, IOException, ClassNotFoundException {
         Compte compte = new Compte();
@@ -82,6 +114,13 @@ public class CompteDAO implements IDAO<Long, Compte> {
         return compte;
     }
 
+    /**
+     * Trouver tout les Comptes existants
+     * @return Liste de Comptes
+     * @throws SQLException en cas d'erreur SQL
+     * @throws IOException en cas d'erreur d'écriture ou de lecture
+     * @throws ClassNotFoundException en cas d'erreur de classe inexistante
+     */
     @Override
     public List<Compte> findAll() throws SQLException, IOException, ClassNotFoundException {
         List<Compte> listCompte = new ArrayList<>();
