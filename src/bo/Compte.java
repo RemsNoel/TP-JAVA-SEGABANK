@@ -41,14 +41,14 @@ public class Compte {
     /**
      * Constructeur pour un Update de Compte
      * @param id_compte Id Compte
-     * @param solde Solde
+     * @param montant montant, a savoir l'operation effectué
      * @param id_agence Id Agence
      * @param decouvert Découvert
      * @param tauxInteret Taux Interet
      */
-    public Compte(int id_compte, double solde, int id_agence, double decouvert, double tauxInteret) {
+    public Compte(int id_compte, double montant, int id_agence, double decouvert, double tauxInteret) {
         this.id_compte = id_compte;
-        this.solde = solde;
+        this.solde = montant;
         this.id_agence = id_agence;
         this.decouvert = decouvert;
         this.tauxInteret = tauxInteret;
