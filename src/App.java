@@ -16,10 +16,25 @@ import jdbc.dao.CompteDAO;
 import jdbc.dao.IDAO;
 
 
+/**
+ * Date: Oct 12-2019
+ * Application Menu Console.
+ * @author 
+ * @version 1.0
+ *
+ */
 public class App {
 	
+	
+	/**
+	 * Création de l'objet Scanner pour recupéré la saisie.
+	 */
 	private static Scanner sc = new Scanner( System.in );
 	
+	/**
+	 * Method d'affichage du menu principale de l'application
+	 * 
+	 */
 	public static void dspMainMenu() {
 		int mode = 0;
 		boolean start=true;
@@ -86,6 +101,10 @@ public class App {
 	
 	}
 	
+	/**
+	 * Method de création d'une agence
+	 * Entre le code, le nom, l'adresse de l'agence par la method controleur.
+	 */
 	private static void createAgence() {
 		IDAO<Long, Agence> agenceCreated= new AgenceDAO();
 		System.out.println( "======================================" );
@@ -123,6 +142,11 @@ public class App {
 		System.out.println( "Agence creer avec succes \n" );
 		dspMainMenu();
 	}
+	/**
+	 * Method affichant la liste des Agence
+	 * Sous menu proposant le details d'une Agence
+	 * Les details de l'Agence affiche tout les Compte de cette agence
+	 */
 	private static void consultAgence() {
 		IDAO<Long, Agence> listAgence=new AgenceDAO();;
 		Agence agence=new Agence();
@@ -157,6 +181,9 @@ public class App {
 		}	
 		
 	}
+	/**
+	 * Method modifie l'Agence en identifiant par ID l'agence a modifié
+	 */
 	private static void modifAgence() {
 		IDAO<Long, Agence> modifAgence=new AgenceDAO();
 		IDAO<Long, Agence> exagence =new AgenceDAO();
@@ -199,6 +226,9 @@ public class App {
 		
 		dspMainMenu();	
 	}
+	/**
+	 * Method supprime l'Agence en identifiant par ID l'agence a supprimé
+	 */
 	private static void suppAgence() {
 		IDAO<Long, Agence> supprAgence=new AgenceDAO();
 		System.out.println( "======================================" );
@@ -221,6 +251,10 @@ public class App {
 		dspMainMenu();	
 		
 	}
+	/**
+	 * Method de creation de Compte, assigné a une Agence
+	 * Le Compte est créer selon le type de Compte, Simple, Payant ou Epargne
+	 */
 	private static void createCompte() {
 		int mode = 0;
 		boolean start=true;
@@ -356,6 +390,10 @@ public class App {
 			break;
 		}
 	}
+	/**
+	 * Method de consultation d'un Compte selon sont type et son ID
+	 * Affiche les information du compte
+	 */
 	private static void consultCompte() {
 		System.out.println( "======================================" );
 		System.out.println( "======= CONSULTATION DE COMPTE =======" );
@@ -420,6 +458,10 @@ public class App {
 		}
 		
 	}
+	/**
+	 * Method de modification de compte selon son type et son ID
+	 * Change le données du compte
+	 */
 	private static void modifCompte() {
 		System.out.println( "======================================" );
 		System.out.println( "========= MODIFIER DES COMPTE ========" );
@@ -540,6 +582,10 @@ public class App {
 		}
 		
 	}
+	/**
+	 * Mehod de suppression de compte selon l'ID du compte
+	 * Supprime le Compte selectionné
+	 */
 	private static void suppCompte() {
 		System.out.println( "======================================" );
 		System.out.println( "======== SUPPRESSION DE COMPTE =======" );
@@ -564,6 +610,11 @@ public class App {
 		
 		
 	}
+	/**
+	 * Method qui gere les opérations de retrait versement et de Calcul d'interet selon le type de compte et son ID
+	 * les opérations de retrait et versement sont different selon si c'est un compte payant ou non
+	 * l'operation de calcul d'interet n'est valable que pour les compte épargne
+	 */
 	private static void operation() {
 		int mode = 0;
 		boolean start=true;
@@ -624,6 +675,7 @@ public class App {
 				sommePayant-=sommeDebiPayant*0.05;
 				compte.setSolde(sommePayant);
 				System.out.println("Votre solde est de "+compte.toString());
+				dspMainMenu();	
 
 			}else {
 				IDAO<Long, Compte> retrait=new CompteDAO();
@@ -641,6 +693,7 @@ public class App {
 				somme-=sommeDebi*0.05;
 				compte.setSolde(somme);
 				System.out.println("Votre solde est de "+compte.toString());
+				dspMainMenu();	
 			}
 		 break;
 	 case 2:
@@ -680,6 +733,7 @@ public class App {
 				sommePayant+=sommeDebiPayant*0.05;
 				compte.setSolde(sommePayant);
 				System.out.println("Votre solde est de "+compte.toString());
+				dspMainMenu();	
 
 			}else {
 				IDAO<Long, Compte> virement=new CompteDAO();
@@ -697,6 +751,7 @@ public class App {
 				somme-=sommeVerse*0.05;
 				compte.setSolde(somme);
 				System.out.println("Votre solde est de "+compte.toString());
+				dspMainMenu();	
 			}
 		 break;
 	 case 3:
@@ -715,12 +770,16 @@ public class App {
 			int tmValoris=sc.nextInt();
 			double txInteret=compte.getSolde()*txInteretAnnu*tmValoris;
 			System.out.println( "Votre Solde avec les interet est de  : "+txInteret+" €" );
+			dspMainMenu();	
 			
 		 break;
 	 }
 		
 	}
-	
+	/**
+	 * Method principale de l'application
+	 * @param args
+	 */
     public static void main(String args[]) {
     	
     	dspMainMenu();
